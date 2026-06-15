@@ -21,6 +21,18 @@
 .hub-drawer-list a span{display:block;margin-top:4px;font-size:12px;color:#536e68}
 
 </style>
+
+<style id="CEN-UNIFIED-FOOTER-V5-CSS">
+body{padding-bottom:92px!important}
+.unifiedDock{position:fixed!important;left:50%!important;bottom:0!important;transform:translateX(-50%)!important;width:100%!important;max-width:560px!important;z-index:3000!important;padding:5px 10px calc(7px + env(safe-area-inset-bottom))!important;background:linear-gradient(to top,rgba(4,8,12,.98),rgba(9,18,26,.92))!important;border-top:1px solid rgba(247,216,137,.24)!important;box-shadow:0 -10px 24px rgba(0,0,0,.42)!important;backdrop-filter:blur(16px)!important;display:block!important;min-height:auto!important}
+.unifiedDock .coreFlow{margin:0 0 4px!important;text-align:center!important;color:#f7d889!important;font-weight:900!important;line-height:1.18!important;font-size:clamp(10px,2.65vw,14px)!important;letter-spacing:-.055em!important;text-shadow:0 2px 6px rgba(0,0,0,.85)!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+.unifiedDock .coreFlow small{display:block!important;margin-bottom:1px!important;color:#d7b565!important;font-size:clamp(7px,1.9vw,10px)!important;font-weight:800!important;letter-spacing:-.03em!important;opacity:.95!important}
+.unifiedDock .unifiedNav{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:5px!important;width:100%!important;margin:0!important;padding:0!important}
+.unifiedDock .action{min-height:34px!important;border:1.2px solid rgba(247,216,137,.42)!important;border-radius:10px!important;background:linear-gradient(180deg,rgba(18,28,36,.92),rgba(8,15,22,.9))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 5px 12px rgba(0,0,0,.30)!important;color:#fff4d8!important;text-decoration:none!important;font-size:clamp(10px,2.55vw,13px)!important;font-weight:950!important;display:flex!important;align-items:center!important;justify-content:center!important;line-height:1.0!important;text-align:center!important;letter-spacing:-.06em!important;text-shadow:0 2px 5px rgba(0,0,0,.75)!important;padding:0 2px!important;cursor:pointer!important}
+.unifiedDock .action.main,.unifiedDock .action[data-link="hub"],.unifiedDock .action[data-footer="hub"]{background:linear-gradient(180deg,#d49a22,#9b660d)!important;border-color:rgba(255,224,142,.82)!important;color:#fff8e6!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 5px 13px rgba(0,0,0,.34)!important}
+@media(min-width:680px){.unifiedDock{border-radius:24px 24px 0 0!important}}
+</style>
+
 </head>
 <body>
 <header class="header"><div class="headerTop"><button class="menuBtn">☰</button><div class="brand"><b>CEN‑Matrix</b><span>성경 시대별 총람</span></div><div class="period">BC 538 ~ BC 430</div></div><div class="headerBottom"><span>포로귀환 시대</span><span>귀환 · 성전 · 에스더와 부림절 · 율법 · 성벽</span></div></header>
@@ -41,14 +53,22 @@
 <div class="dot" data-title="성벽 허브" data-info="BC 445\n느헤미야가 예루살렘 성벽을 재건하고 공동체 질서를 바로 세웁니다." style="left:81.5%;top:136px" data-hub="hubs/index.html?hub=nehemiah"></div><div class="eventText hasHub" style="left:81.5%;top:152px">BC445<br>성벽 허브<br><span class="hubExploreBtn" data-hub-url="hubs/index.html?hub=nehemiah">허브탐험</span></div>
 </div></div>
 <section class="cen-enhance-panel"><div class="cen-layer-card"><div class="cen-layer-title">포로귀환 5허브 흐름</div><div class="cen-flow"><div class="cen-node"><b>귀환</b><span>고레스 칙령<br>회복의 시작</span></div><div class="cen-node"><b>성전</b><span>제2성전 완공<br>예배 회복</span></div><div class="cen-node"><b>에스더</b><span>부림절<br>섭리의 보존</span></div><div class="cen-node"><b>율법</b><span>에스라<br>말씀 회복</span></div><div class="cen-node dark"><b>성벽</b><span>느헤미야<br>공동체 완성</span></div></div></div><div class="cen-warning-strip">포로귀환 시대의 핵심은 단순한 귀향이 아닙니다. 성전, 말씀, 성벽을 통해 무너진 예배와 정체성과 공동체가 다시 세워지는 회복의 과정입니다.</div></section>
-</main><footer class="actions"><button class="action">성경연대기</button><button class="action">연결탐험</button><button class="action">한눈에 성경</button><button class="action">허브</button></footer>
+</main><footer class="footer actions unifiedDock" aria-label="포로귀환 하단 네비게이터">
+  <div class="coreFlow"><small>포로귀환 핵심흐름</small>귀환 → 성전 재건 → 에스더와 부림절 → 율법 회복 → 성벽 재건</div>
+  <nav class="unifiedNav" aria-label="하단 메뉴">
+    <button class="action" type="button" data-link="timeline" data-footer="timeline">성경연표</button>
+    <button class="action" type="button" data-link="connect" data-footer="connect">주제탐험</button>
+    <button class="action" type="button" data-link="overview" data-footer="overview">한눈에 성경</button>
+    <button class="action main" type="button" data-link="hub" data-footer="hub">허브</button>
+  </nav>
+</footer>
 <div class="modal" id="modal"><div class="card"><div class="cardTitle" id="modalTitle"></div><div class="cardBody" id="modalBody"></div><button class="close" id="closeModal">닫기</button></div></div>
 <script>(function(){document.addEventListener('click',function(e){const hub=e.target.closest('.dot[data-hub]');if(!hub)return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();const url=hub.dataset.hub;if(url)window.open(url,'_self')},true)})();const tabs=[...document.querySelectorAll('.tab')];const views=[...document.querySelectorAll('.view')];tabs.forEach(tab=>{tab.onclick=()=>{const targetView=tab.dataset.view;if(targetView==='all'){const isAllActive=tab.classList.contains('active');tabs.forEach(t=>{if(isAllActive)t.classList.remove('active');else t.classList.add('active')})}else{tab.classList.toggle('active');const nonAllTabs=tabs.filter(t=>t.dataset.view!=='all');const allActive=nonAllTabs.every(t=>t.classList.contains('active'));const allTab=document.querySelector('.tab[data-view="all"]');if(allActive)allTab.classList.add('active');else allTab.classList.remove('active')}const activeViews=tabs.filter(t=>t.classList.contains('active')&&t.dataset.view!=='all').map(t=>t.dataset.view);views.forEach(v=>{const match=activeViews.some(cl=>v.classList.contains(cl));v.classList.toggle('hidden',!match)});updateStickyLabels()}});const modal=document.getElementById('modal');const mt=document.getElementById('modalTitle');const mb=document.getElementById('modalBody');document.querySelectorAll('[data-title]').forEach(el=>{el.onclick=()=>{mt.textContent=el.dataset.title;mb.textContent=el.dataset.info||'준비중입니다.';modal.classList.add('show')}});document.getElementById('closeModal').onclick=()=>modal.classList.remove('show');modal.onclick=e=>{if(e.target===modal)modal.classList.remove('show')};const mainScroll=document.getElementById('mainScroll');function updateStickyLabels(){const scrollLeft=mainScroll.scrollLeft;document.querySelectorAll('.scroll-label').forEach(label=>{const bar=label.parentElement;if(!bar)return;const barLeft=bar.offsetLeft;const barWidth=bar.offsetWidth;const labelWidth=label.offsetWidth||80;let targetX=scrollLeft-barLeft+6;const maxX=barWidth-labelWidth-8;if(targetX<0)targetX=0;if(targetX>maxX)targetX=maxX;label.style.transform=`translateX(${targetX}px)`})}mainScroll.addEventListener('scroll',updateStickyLabels,{passive:true});window.addEventListener('resize',updateStickyLabels);setTimeout(updateStickyLabels,100);if('serviceWorker'in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script>
 <script>
 (function(){
   const footerLinks={
-    '성경연대기':'https://centiger.github.io/cen-bible-chrololgy/?view=timeline',
-    '연결탐험':'https://centiger.github.io/cen-bible-chrololgy/#hub',
+    '성경연표':'https://centiger.github.io/CEN-Chronology/?view=timeline',
+    '주제탐험':'https://centiger.github.io/CEN-Chronology/',
     '한눈에 성경':'https://centiger.github.io/CEN-Bible2.0/#overview66'
   };
   document.addEventListener('click',function(e){
@@ -127,6 +147,26 @@
     if(e.target && e.target.id === 'hubDrawerClose') closeReturnHubDrawer();
   });
   window.openReturnHubDrawer=openReturnHubDrawer;
+})();
+</script>
+
+
+<script id="CEN-UNIFIED-FOOTER-V5-LINKS">
+(function(){
+  const links={
+    timeline:'https://centiger.github.io/CEN-Chronology/?view=timeline',
+    connect:'https://centiger.github.io/CEN-Chronology/',
+    overview:'https://centiger.github.io/CEN-Bible2.0/#overview66'
+  };
+  document.addEventListener('click',function(e){
+    const btn=e.target.closest && e.target.closest('.unifiedDock .action');
+    if(!btn) return;
+    const key=btn.dataset.link || btn.dataset.footer || '';
+    if(key==='timeline'||key==='connect'||key==='overview'){
+      e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+      location.href=links[key];
+    }
+  },true);
 })();
 </script>
 
