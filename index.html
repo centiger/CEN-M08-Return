@@ -69,6 +69,23 @@ main.main{height:calc(100% - 72px - 40px - var(--cen-safe-footer-h) - env(safe-a
 #cenSafeFooter .action.main,#cenSafeFooter .action[data-link="hub"],#cenSafeFooter .action[data-footer="hub"]{background:linear-gradient(180deg,#d49a22,#9b660d)!important;border-color:rgba(255,224,142,.82)!important;color:#fff8e6!important;}
 </style>
 
+
+<style id="cen-hub-drawer-position-fix">
+/* CEN hub-list popup position fix: keep 5th hub visible above the fixed bottom navigator */
+.drawer-card,
+.hub-drawer-panel{
+  max-height: calc(100vh - 145px) !important;
+  overflow-y: auto !important;
+  margin-bottom: 92px !important;
+  box-sizing: border-box !important;
+}
+@supports (height: 100dvh){
+  .drawer-card,
+  .hub-drawer-panel{
+    max-height: calc(100dvh - 145px) !important;
+  }
+}
+</style>
 </head>
 <body>
 <header class="header"><div class="headerTop"><button class="menuBtn">☰</button><div class="brand"><b>CEN‑Matrix</b><span>성경 시대별 총람</span></div><div class="period">BC 538 ~ BC 430</div></div><div class="headerBottom"><span>포로귀환 시대</span><span>귀환 · 성전 · 에스더와 부림절 · 율법 · 성벽</span></div></header>
