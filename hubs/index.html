@@ -31,7 +31,56 @@ function esc(s){return String(s??'')}
 function hrefFor(h,dir){if(!h)return '../index.html';if(dir==='prev'){return h.prev?`?hub=${h.prev}`:'../index.html'}if(dir==='next'){return h.next?`?hub=${h.next}`:(h.nextUrl||'../index.html')}return '#'}
 function labelFor(h,dir){if(dir==='prev')return '← 이전허브';if(!h.next && h.nextUrl)return h.nextLabel||'예수시대 Matrix →';return '다음허브 →'}
 function nodes(items){return (items||[]).map(i=>`<div class="node"><div class="ico">${esc(i.icon)}</div><b>${esc(i.title)}</b><small>${esc(i.text)}</small></div>`).join('')}
-function renderCards(title,items,cls='infoGrid'){if(!items||!items.length)return '';return `<section class="card"><h2 class="sectionTitle">${title}</h2><div class="${cls}">${items.map(x=>`<div class="info"><b>${esc(x.title||x[0])}</b><p>${esc(x.text||x[1]||'')}</p></div>`).join('')}</div></section>`}
+function renderExploreCards(title,items){
+  if(!items||!items.length)return '';
+  const isExplore = title==='연결탐험' || title==='통합탐험';
+  if(!isExplore){
+    return `<section class="card"><h2 class="sectionTitle">${title}</h2><div class="infoGrid">${items.map(x=>`<div class="info"><b>${esc(x.title||x[0])}</b><p>${esc(x.text||x[1]||'')}</p></div>`).join('')}</div></section>`;
+  }
+  return `<section class="card exploreSection"><h2 class="sectionTitle">${title}</h2><div class="exploreGrid">${items.map(renderExploreItem).join('')}</div></section>`;
+}
+function renderExploreItem(x){
+  const title = esc(x.title||x[0]||'');
+  const text = String(x.text||x[1]||'');
+  const isFlow = title.includes('연결 흐름') || title.includes('성경 전체 흐름') || text.includes('→') || text.includes('↓');
+  const body = isFlow ? renderVerticalFlow(text) : esc(text).replace(/\n/g,'<br>');
+  return `<div class="exploreCard"><b>${title}</b><p>${body}</p></div>`;
+}
+function renderVerticalFlow(text){
+  const raw=String(text||'').trim();
+  const parts=raw.split(/\s*(?:→|↓|\n↓\n)\s*/).map(v=>v.trim()).filter(Boolean);
+  if(parts.length<2)return esc(raw).replace(/\n/g,'<br>');
+  return parts.map((step,i)=>{
+    const clean=step.replace(/^🔹\s*/,'').trim();
+    const labeled=hasEmoji(clean)?clean:`${iconForStep(clean)} ${clean}`;
+    return `<div class="flowStep">${esc(labeled)}</div>${i<parts.length-1?'<div class="flowDown">↓</div>':''}`;
+  }).join('');
+}
+function hasEmoji(s){return /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(String(s||''));}
+function iconForStep(step){
+  const t=String(step||'');
+  if(/출애굽/.test(t)) return '🌊';
+  if(/가나안|정착|약속의 땅/.test(t)) return '🏞️';
+  if(/예루살렘 함락|함락|멸망/.test(t)) return '🏚️';
+  if(/70년|포로|바벨론/.test(t)) return '⛓️';
+  if(/고레스|칙령/.test(t)) return '📜';
+  if(/스룹바벨|귀환|포로귀환/.test(t)) return '🚶';
+  if(/제단/.test(t)) return '🔥';
+  if(/성전|제2성전|예배/.test(t)) return '🏛️';
+  if(/학개|스가랴|선지자/.test(t)) return '📣';
+  if(/에스더|왕후/.test(t)) return '👑';
+  if(/하만|음모/.test(t)) return '⚠️';
+  if(/왕의 불면증/.test(t)) return '🌙';
+  if(/부림절|구원/.test(t)) return '🎉';
+  if(/율법|말씀|에스라/.test(t)) return '📖';
+  if(/회개|언약 갱신/.test(t)) return '😭';
+  if(/성벽|느헤미야/.test(t)) return '🧱';
+  if(/공동체/.test(t)) return '👥';
+  if(/그리스도|예수|메시아|십자가/.test(t)) return '✝️';
+  if(/교회/.test(t)) return '⛪';
+  return '🔹';
+}
+
 function renderList(title,items){if(!items||!items.length)return '';return `<section class="card"><h2 class="sectionTitle">${title}</h2><div class="listFlow">${items.map(x=>`<div class="step">${esc(x)}</div>`).join('')}</div></section>`}
 function renderVerse(items){if(!items||!items.length)return '';return `<section class="card"><h2 class="sectionTitle">대표성구</h2><div class="verseCard">${items.map(v=>`<div class="verse"><b>${esc(v.ref)}</b><p>${esc(v.text)}</p></div>`).join('')}</div></section>`}
 function renderPeople(items){if(!items||!items.length)return '';return `<section class="card"><h2 class="sectionTitle">핵심인물</h2><div class="peopleGrid">${items.map(p=>`<div class="person"><span class="role">${esc(p.role)}</span><b>${esc(p.name)}</b><p>${esc(p.text)}</p></div>`).join('')}</div></section>`}
@@ -50,18 +99,17 @@ ${renderQuestion(h)}
 ${renderVerse(h.verse)}
 ${renderList('핵심사건',h.events)}
 ${renderPeople(h.people)}
-${renderCards('연결탐험',h.connections)}
-${renderCards('통합탐험',h.integration)}
+${renderExploreCards('연결탐험',h.connections)}
+${renderExploreCards('통합탐험',h.integration)}
 ${renderThought(h.thought)}
 ${renderBible(h.bible)}
 ${renderMessage(h.message)}
 ${h.note?`<div class="note">${esc(h.note)}</div>`:''}` }
 function render(){const h=HUBS.find(x=>x.slug===slug)||HUBS[0];slug=h.slug;renderTabs();renderHeader(h);renderHubList();$('content').innerHTML=renderHub(h);$('prevBottom').href=hrefFor(h,'prev');$('prevBottom').textContent=labelFor(h,'prev');$('nextBottom').href=hrefFor(h,'next');$('nextBottom').textContent=labelFor(h,'next')}
-async function init(){const res=await fetch('data/hubs.json?v=return-standard-hub-v2-question-thought');const data=await res.json();HUBS=data.hubs||[];slug=slug||data.defaultHub||(HUBS[0]&&HUBS[0].slug);render()}
+async function init(){const res=await fetch('data/hubs.json?v=m08-v37-inline-fixed');const data=await res.json();HUBS=data.hubs||[];slug=slug||data.defaultHub||(HUBS[0]&&HUBS[0].slug);render()}
 $('hubListBtn').onclick=()=>$('drawer').classList.add('show');$('drawerClose').onclick=()=>$('drawer').classList.remove('show');$('drawer').onclick=e=>{if(e.target.id==='drawer')$('drawer').classList.remove('show')};
 if('serviceWorker'in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
 init();
 </script>
-<script src="js/app.js?v=m08-v36-hard-vertical"></script>
 </body>
 </html>
