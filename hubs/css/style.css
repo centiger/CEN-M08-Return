@@ -2,3 +2,33 @@
 
 /* M08 question/thought cards */
 .questionCard{background:linear-gradient(135deg,#123a35,#236B63);color:#fff;border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 8px 22px rgba(20,80,70,.18);border:1px solid #57BFB6}.questionCard .qLabel{font-size:12px;font-weight:950;color:#bff7ee;margin-bottom:6px}.questionCard .qText{font-size:22px;line-height:1.35;font-weight:950;margin-bottom:10px;word-break:keep-all}.questionCard .aText{background:rgba(255,255,255,.12);border-radius:13px;padding:10px 12px;color:#fff7b8;font-size:14px;line-height:1.55;font-weight:900;word-break:keep-all}.thinkBox{background:#fff;border:1px solid #a9d2ca;border-radius:18px;padding:15px;margin:12px 0;box-shadow:0 4px 14px rgba(20,80,70,.08)}.thinkBox b{display:block;color:#123a35;font-size:15px;margin-bottom:8px}.thinkBox p{margin:0;font-size:14px;line-height:1.65;font-weight:850;color:#243b37;word-break:keep-all}
+
+
+/* v3.3 M08 standard explore */
+.exploreGrid{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;width:100%!important}
+.exploreCard{
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+  border:1px solid #d2bd96!important;
+  border-radius:16px!important;
+  background:#fffaf0!important;
+  padding:12px 13px!important;
+  margin:0!important;
+}
+.exploreCard b{
+  display:block!important;
+  color:#16213a!important;
+  font-size:16px!important;
+  margin-bottom:8px!important;
+  line-height:1.35!important;
+  font-weight:950!important;
+}
+.exploreCard p{
+  margin:0!important;
+  color:#3c2a17!important;
+  font-size:15px!important;
+  line-height:1.75!important;
+  font-weight:780!important;
+  word-break:keep-all!important;
+}
