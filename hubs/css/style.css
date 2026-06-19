@@ -32,3 +32,9 @@
   font-weight:780!important;
   word-break:keep-all!important;
 }
+
+
+/* v3.4 M08 vertical flow certainty */
+.exploreGrid{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;width:100%!important}
+.exploreCard{width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+.exploreCard p{line-height:1.85!important}
