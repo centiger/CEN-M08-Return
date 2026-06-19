@@ -58,11 +58,20 @@ function renderStandardExplore(value){
         return {title:label, text:raw.slice(label.length).trim()};
       }
     }
+
+    // object title may already be clean label while text contains flow
+    if(typeof x==='object' && x){
+      return {
+        title:String(x.title||x.label||'').trim(),
+        text:String(x.text||x.content||x.body||'').trim()
+      };
+    }
+
     return {title:'', text:raw};
   }
   function renderItem(x){
     const item=splitItem(x);
-    const isFlow=/연결\s*흐름|성경\s*전체\s*흐름/.test(item.title)||item.text.includes('→')||item.text.includes('↓');
+    const isFlow=/연결\s*흐름|성경\s*전체\s*흐름/.test(item.title)||String(item.text).includes('→')||String(item.text).includes('↓');
     const body=isFlow?standardVerticalFlowHtml(item.text):standardEscape(item.text).replace(/\n/g,'<br>');
     return `<div class="exploreCard">${item.title?`<b>${standardEscape(item.title)}</b>`:''}<p>${body}</p></div>`;
   }
@@ -70,4 +79,27 @@ function renderStandardExplore(value){
 }
 
 /* M08 question/thought cards are rendered by hubs/index.html inline script. */
-let HUBS=[];let current=null;const $=id=>document.getElementById(id);const params=new URLSearchParams(location.search);async function loadData(){const res=await fetch('data/hubs.json?v=m08-v33-standard');const data=await res.json();HUBS=data.hubs||[];const slug=params.get('hub')||data.defaultHub||(HUBS[0]&&HUBS[0].slug);renderHub(slug);renderHubList()}function renderHub(slug){current=HUBS.find(h=>h.slug===slug)||HUBS[0];if(!current)return;$('appTitle').textContent=current.title;$('appSub').textContent=current.subtitle||'포로귀환 핵심사건 확장탐험';$('hero').innerHTML=`<div class="kicker">${current.kicker||''}</div><h1>${current.heroTitle||current.title}</h1><p>${current.heroText||''}</p><div class="tags">${(current.tags||[]).map(t=>`<span>${t}</span>`).join('')}</div>`;$('flowTitle').textContent=current.mainFlowTitle||'핵심 흐름';$('mainFlow').innerHTML=nodes(current.mainFlow||[]);$('mapTitle').textContent=current.mapTitle||'지도';$('mapImg').src=current.map||'';$('mapCaption').textContent=current.mapCaption||'';$('keyItems').innerHTML=(current.keyItems||[]).map(i=>`<div class="infoBox"><div class="ico">${i.icon||'•'}</div><b>${i.title}</b><p>${i.text||''}</p></div>`).join('');$('overviewFlow').innerHTML=nodes(current.overviewFlow||[]);$('timeline').innerHTML=(current.timeline||[]).map(t=>`<div class="t ${t.active?'active':''}">${t.year||''}<div class="dot"></div>${t.label||''}</div>`).join('');const linkItems=[...(current.links||[])].filter(l=>!(current.nextUrl&&l.url===current.nextUrl));$('links').innerHTML=linkItems.map((l,i)=>`<button class="${i===1?'primary':''}" data-url="${l.url||''}" data-hub="${l.hub||''}">${l.label}</button>`).join('');$('prevBtn').textContent=current.prevLabel||'이전 허브';$('nextBtn').textContent=current.nextLabel||'다음 허브'}function nodes(items){return items.map(i=>`<div class="node"><div class="ico">${i.icon||'•'}</div><b>${i.title||''}</b><small>${i.text||''}</small></div>`).join('')}function goHub(slug){if(!slug){alert('다음 단계에서 연결됩니다.');return}history.pushState(null,'',`?hub=${slug}`);renderHub(slug);window.scrollTo(0,0)}function openUrl(url){if(!url)return;if(url.startsWith('#'))alert('다음 단계에서 연결됩니다.');else window.open(url,'_self')}function renderHubList(){$('hubList').innerHTML=HUBS.map(h=>`<button class="hubItem" data-hub="${h.slug}"><b>${h.title}</b><span>${h.year||''} · ${h.short||''}</span></button>`).join('')}document.addEventListener('click',e=>{const hub=e.target.closest('[data-hub]');if(hub&&hub.dataset.hub){e.preventDefault();$('drawer').classList.remove('show');goHub(hub.dataset.hub);return}const url=e.target.closest('[data-url]');if(url){e.preventDefault();openUrl(url.dataset.url)}});$('prevBtn').onclick=()=>current&&current.prev?goHub(current.prev):null;$('nextBtn').onclick=()=>{if(!current)return;if(current.nextUrl)return openUrl(current.nextUrl);if(current.next)return goHub(current.next);};$('matrixBtn').onclick=()=>openUrl('../index.html');$('backBtn').onclick=()=>openUrl('../index.html');$('hubListBtn').onclick=()=>$('drawer').classList.add('show');$('drawerClose').onclick=()=>$('drawer').classList.remove('show');$('drawer').onclick=e=>{if(e.target.id==='drawer')$('drawer').classList.remove('show')};if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});loadData();
+let HUBS=[];let current=null;const $=id=>document.getElementById(id);const params=new URLSearchParams(location.search);async function loadData(){const res=await fetch('data/hubs.json?v=m08-v34-vertical-flow');const data=await res.json();HUBS=data.hubs||[];const slug=params.get('hub')||data.defaultHub||(HUBS[0]&&HUBS[0].slug);renderHub(slug);renderHubList()}function renderHub(slug){current=HUBS.find(h=>h.slug===slug)||HUBS[0];if(!current)return;$('appTitle').textContent=current.title;$('appSub').textContent=current.subtitle||'포로귀환 핵심사건 확장탐험';$('hero').innerHTML=`<div class="kicker">${current.kicker||''}</div><h1>${current.heroTitle||current.title}</h1><p>${current.heroText||''}</p><div class="tags">${(current.tags||[]).map(t=>`<span>${t}</span>`).join('')}</div>`;$('flowTitle').textContent=current.mainFlowTitle||'핵심 흐름';$('mainFlow').innerHTML=nodes(current.mainFlow||[]);$('mapTitle').textContent=current.mapTitle||'지도';$('mapImg').src=current.map||'';$('mapCaption').textContent=current.mapCaption||'';$('keyItems').innerHTML=(current.keyItems||[]).map(i=>`<div class="infoBox"><div class="ico">${i.icon||'•'}</div><b>${i.title}</b><p>${i.text||''}</p></div>`).join('');$('overviewFlow').innerHTML=nodes(current.overviewFlow||[]);$('timeline').innerHTML=(current.timeline||[]).map(t=>`<div class="t ${t.active?'active':''}">${t.year||''}<div class="dot"></div>${t.label||''}</div>`).join('');const linkItems=[...(current.links||[])].filter(l=>!(current.nextUrl&&l.url===current.nextUrl));$('links').innerHTML=linkItems.map((l,i)=>`<button class="${i===1?'primary':''}" data-url="${l.url||''}" data-hub="${l.hub||''}">${l.label}</button>`).join('');$('prevBtn').textContent=current.prevLabel||'이전 허브';$('nextBtn').textContent=current.nextLabel||'다음 허브'}function nodes(items){return items.map(i=>`<div class="node"><div class="ico">${i.icon||'•'}</div><b>${i.title||''}</b><small>${i.text||''}</small></div>`).join('')}function goHub(slug){if(!slug){alert('다음 단계에서 연결됩니다.');return}history.pushState(null,'',`?hub=${slug}`);renderHub(slug);window.scrollTo(0,0)}function openUrl(url){if(!url)return;if(url.startsWith('#'))alert('다음 단계에서 연결됩니다.');else window.open(url,'_self')}function renderHubList(){$('hubList').innerHTML=HUBS.map(h=>`<button class="hubItem" data-hub="${h.slug}"><b>${h.title}</b><span>${h.year||''} · ${h.short||''}</span></button>`).join('')}document.addEventListener('click',e=>{const hub=e.target.closest('[data-hub]');if(hub&&hub.dataset.hub){e.preventDefault();$('drawer').classList.remove('show');goHub(hub.dataset.hub);return}const url=e.target.closest('[data-url]');if(url){e.preventDefault();openUrl(url.dataset.url)}});$('prevBtn').onclick=()=>current&&current.prev?goHub(current.prev):null;$('nextBtn').onclick=()=>{if(!current)return;if(current.nextUrl)return openUrl(current.nextUrl);if(current.next)return goHub(current.next);};$('matrixBtn').onclick=()=>openUrl('../index.html');$('backBtn').onclick=()=>openUrl('../index.html');$('hubListBtn').onclick=()=>$('drawer').classList.add('show');$('drawerClose').onclick=()=>$('drawer').classList.remove('show');$('drawer').onclick=e=>{if(e.target.id==='drawer')$('drawer').classList.remove('show')};if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});loadData();
+
+function forceVerticalFlowText(){
+  document.querySelectorAll('.exploreCard p').forEach(p=>{
+    const title=(p.parentElement?.querySelector('b')?.textContent||'').trim();
+    const txt=p.textContent||'';
+    if((title.includes('연결 흐름')||title.includes('성경 전체 흐름')||txt.includes('→')) && !p.innerHTML.includes('<br>↓<br>')){
+      const parts=txt.split(/\s*(?:→|↓)\s*/).map(v=>v.trim()).filter(Boolean);
+      if(parts.length>1){
+        p.innerHTML=parts.map(step=>{
+          const labeled=standardHasEmoji(step)?step:`${standardIconForStep(step)} ${step}`;
+          return standardEscape(labeled);
+        }).join('<br>↓<br>');
+      }
+    }
+  });
+}
+
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  setTimeout(forceVerticalFlowText, 300);
+});
+window.addEventListener('hashchange', ()=>setTimeout(forceVerticalFlowText, 100));
+document.addEventListener('click', ()=>setTimeout(forceVerticalFlowText, 100));
