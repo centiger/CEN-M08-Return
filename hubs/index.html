@@ -33,7 +33,7 @@ function labelFor(h,dir){if(dir==='prev')return '← 이전허브';if(!h.next &&
 function nodes(items){return (items||[]).map(i=>`<div class="node"><div class="ico">${esc(i.icon)}</div><b>${esc(i.title)}</b><small>${esc(i.text)}</small></div>`).join('')}
 function renderExploreCards(title,items){
   if(!items||!items.length)return '';
-  const isExplore = title==='연결탐험' || title==='통합탐험';
+  const isExplore = title==='Meaning' || title==='파노라마' || title==='연결탐험' || title==='통합탐험';
   if(!isExplore){
     return `<section class="card"><h2 class="sectionTitle">${title}</h2><div class="infoGrid">${items.map(x=>`<div class="info"><b>${esc(x.title||x[0])}</b><p>${esc(x.text||x[1]||'')}</p></div>`).join('')}</div></section>`;
   }
@@ -99,8 +99,8 @@ ${renderQuestion(h)}
 ${renderVerse(h.verse)}
 ${renderList('핵심사건',h.events)}
 ${renderPeople(h.people)}
-${renderExploreCards('연결탐험',h.connections)}
-${renderExploreCards('통합탐험',h.integration)}
+${renderExploreCards('Meaning',h.connections)}
+${renderExploreCards('파노라마',h.integration)}
 ${renderThought(h.thought)}
 ${renderBible(h.bible)}
 ${renderMessage(h.message)}
